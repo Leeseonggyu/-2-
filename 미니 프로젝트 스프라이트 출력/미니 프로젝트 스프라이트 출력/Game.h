@@ -1,5 +1,6 @@
 #pragma once
-#include<SDL.h>
+#include "SDL.h"
+#include "TextureManager.h"
 #include<iostream>
 #include<SDL_image.h>
 
@@ -31,4 +32,7 @@ private:
 	SDL_Renderer*m_pRenderer;
 	
 	bool m_bRunning = true;
+
+	int m_currentFrame;
+	int m_currentFrame2;
 };

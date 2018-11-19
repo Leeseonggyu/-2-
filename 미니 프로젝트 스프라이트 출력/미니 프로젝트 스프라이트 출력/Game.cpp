@@ -12,8 +12,14 @@ bool Game::init(const char*title, int xpos, int ypos, int width,
 
 		m_bRunning = true;
 
-		//SDL_Surface*pTempSurface = SDL_LoadBMP("assets/rider.bmp");
-		//SDL_Surface*pTempSurface = IMG_Load("assets/animate.png");
+		if (!TheTextureManager::Instance()->load("assets/Castlemaze_Reimu.png", "Reimu", m_pRenderer))
+		{
+			return false;
+		}
+		if (!TheTextureManager::Instance()->load("battleback.png", "back", m_pRenderer))
+		{
+			return false;
+		}
 		SDL_Surface*pTempSurface = IMG_Load("assets/Castlemaze_Reimu.png");
 		SDL_Surface*pTempSurface2 = IMG_Load("assets/battleback.png");
 		m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
@@ -51,22 +57,29 @@ void Game::render()
 {
 
 	SDL_RenderClear(m_pRenderer);
-	SDL_RenderCopy(m_pRenderer, m_pTexture2,
-		&m_sourceRectangle2, &m_destinationRectangle2);
-	SDL_RenderCopy(m_pRenderer, m_pTexture,
-		&m_sourceRectangle, &m_destinationRectangle);
+	TheTextureManager::Instance()->draw("back", 100, 100, m_sourceRectangle2.w, m_sourceRectangle.y,
+		m_pRenderer);
+
+	TheTextureManager::Instance()->drawFrame("Reimu", x, y,
+		76, 82, 1, m_currentFrame, m_pRenderer);
+
+	//SDL_RenderCopy(m_pRenderer, m_pTexture2,
+		//&m_sourceRectangle2, &m_destinationRectangle2);
+	//SDL_RenderCopy(m_pRenderer, m_pTexture,
+		//&m_sourceRectangle, &m_destinationRectangle);
 	
     SDL_RenderPresent(m_pRenderer);
 }
 void Game::update()
 {
+	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
 	m_sourceRectangle.x = 76 * int(((SDL_GetTicks() / 100) % 6));
 	m_destinationRectangle.x = m_sourceRectangle.x = x;
 	m_destinationRectangle.y = m_sourceRectangle.y = y;
 }
 void Game::update2()
 {
-	
+	m_currentFrame2 = int(((SDL_GetTicks() / 100) % 6));
 	m_destinationRectangle.x = m_sourceRectangle.x = x;
 	m_destinationRectangle.y = m_sourceRectangle.y = y;
 }

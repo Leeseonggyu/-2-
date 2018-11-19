@@ -5,7 +5,7 @@ Game*g_game = 0;
 int main(int argc, char*argv[])
 {
 	g_game = new Game();
-	g_game->init("animate", 300, 300, 853, 480, true);
+	g_game->init("animate2", 300, 300, 853, 480, true);
 	int up = 0;
 
 	while (g_game->running())
